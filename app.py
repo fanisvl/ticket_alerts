@@ -3,8 +3,12 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
+
+op = webdriver.ChromeOptions()
+op.add_argument('headless') 
+
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
 driver.get('https://www.villagecinemas.gr/WebTicketing/')
 
 print(driver.title)
@@ -27,7 +31,7 @@ for try_date in try_dates:
         new_date_available = True
 
     except:
-        print("date: " + find + ", was not found.")
+        pass
 
 print()
 
