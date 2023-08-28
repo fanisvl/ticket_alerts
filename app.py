@@ -32,6 +32,7 @@ def main():
             pass
 
     print()
+    driver.quit
 
     if new_date_available:
         print("New date found!")
