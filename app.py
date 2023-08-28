@@ -22,7 +22,7 @@ def main():
     movie = driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div[5]")
     movie.click()
 
-    try_dates = ["0830","0831", "0901", "0902", "0903", "0904",
+    try_dates = ["0831", "0901", "0902", "0903", "0904",
                 "0905", "0906", "0907", "0908", "0909",
                 "0910","0911","0912","0913","0914","0915"]
 
@@ -36,7 +36,6 @@ def main():
         except:
             pass
 
-    print()
     driver.quit()
 
     if new_date_found:
@@ -45,6 +44,7 @@ def main():
     else:
         print("No new dates yet.")
 
+    return new_date_found
 
 def send_email():
     sg = sendgrid.SendGridAPIClient(api_key=os.getenv("SENDGRID_API_KEY"))
