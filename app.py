@@ -11,8 +11,6 @@ op.add_argument('headless')
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
 driver.get('https://www.villagecinemas.gr/WebTicketing/')
 
-print(driver.title)
-
 cinema = driver.find_element(By.XPATH, "//*[@id=\"cinemaSelection\"]/div/div/div[1]/a")
 cinema.click()
 
