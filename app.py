@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 import os
 import sendgrid
 from sendgrid.helpers.mail import Mail, Email, To, Content
+from dotenv import load_dotenv
 
 def main():
 
@@ -22,7 +23,7 @@ def main():
     movie = driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div[5]")
     movie.click()
 
-    try_dates = ["0831", "0901", "0902", "0903", "0904",
+    try_dates = ["0830", "0831", "0901", "0902", "0903", "0904",
                 "0905", "0906", "0907", "0908", "0909",
                 "0910","0911","0912","0913","0914","0915"]
 
@@ -47,6 +48,7 @@ def main():
     return new_date_found
 
 def send_email():
+    load_dotenv()
     sg = sendgrid.SendGridAPIClient(api_key=os.getenv("SENDGRID_API_KEY"))
     
     from_email = Email("fanis.vlahogiannis@gmail.com")
