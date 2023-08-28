@@ -23,9 +23,11 @@ def countdown(start_from):
 def run_script():
 
     interval = int(input("Interval between checks (min)? "))
+    attempts = 0
     while True:
         clear()
-        print("\nChecking for new dates..")
+        attempts += 1
+        print("\nChecking for new dates.. (" + str(attempts) + ")")
         new_date_found = app.main()
         if new_date_found:
             break
