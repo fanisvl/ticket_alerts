@@ -25,7 +25,7 @@ def main():
     for try_date in try_dates:
         find = "#date2023" + try_date
         try:
-            datepicks = driver.find_element(By.CSS_SELECTOR, find)
+            find_try_date = driver.find_element(By.CSS_SELECTOR, find)
             new_date_available = True
 
         except:
