@@ -9,7 +9,7 @@ def run_script():
         if new_date_found:
             break
         print("Next check in 15min ")
-        time.sleep(5) # run every 15min
+        time.sleep(900) # run every 15min
 
 if __name__ == "__main__":
     run_script()

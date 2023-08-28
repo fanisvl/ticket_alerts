@@ -52,7 +52,7 @@ def send_email():
     from_email = Email("fanis.vlahogiannis@gmail.com")
     to_email = To("fanis.vlahogiannis@gmail.com")
     subject = "New dates available for Oppenheimer!"
-    content = Content("text/plain", "**New dates available!**")
+    content = Content("text/plain", "New dates available!")
     mail = Mail(from_email, to_email, subject, content)
 
     # Get a JSON-ready representation of the Mail object
