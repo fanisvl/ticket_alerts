@@ -19,14 +19,14 @@ def main():
 
     try_dates = ["0831", "0901", "0902", "0903", "0904",
                 "0905", "0906", "0907", "0908", "0909",
-                "0910","0911","0912","0913","0914","0915",]
+                "0910","0911","0912","0913","0914","0915"]
 
-    new_date_available = False
+    new_date_found = False
     for try_date in try_dates:
         find = "#date2023" + try_date
         try:
             find_try_date = driver.find_element(By.CSS_SELECTOR, find)
-            new_date_available = True
+            new_date_found = True
 
         except:
             pass
@@ -34,7 +34,7 @@ def main():
     print()
     driver.quit()
 
-    if new_date_available:
+    if new_date_found:
         print("New date found!")
     else:
         print("No new dates yet.")
