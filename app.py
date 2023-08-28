@@ -39,10 +39,10 @@ def main():
     driver.quit()
 
     if new_date_found:
-        print("New date found!")
+        print("== New date found! ==")
         send_email()
     else:
-        print("No new dates yet.")
+        print("== No new dates yet. == ")
 
     return new_date_found
 
