@@ -11,6 +11,7 @@ def clear():
 
 
 def countdown(start_from):
+    """"Counts down from specified minute value"""
     time_left = start_from
     while time_left > 0:
             print("Next check", time_left, "min")
@@ -25,7 +26,7 @@ def run_script():
         new_date_found = app.main()
         if new_date_found:
             break
-        countdown(15)
+        countdown(15) # 15min
 
 if __name__ == "__main__":
     run_script()
