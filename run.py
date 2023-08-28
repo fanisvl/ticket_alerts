@@ -16,7 +16,7 @@ def countdown(start_from):
     while time_left > 0:
             clear()
             print("== No new dates yet. == ")
-            print("Next check", time_left, "min")
+            print("Next check in ", time_left, "min")
             time.sleep(60)
             time_left -= 1
 
