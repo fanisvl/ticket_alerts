@@ -7,9 +7,6 @@ from selenium.webdriver.common.by import By
 import os
 import sendgrid
 from sendgrid.helpers.mail import Mail, Email, To, Content
-# For api key
-from dotenv import load_dotenv
-from pathlib import Path
 
 def main():
 
