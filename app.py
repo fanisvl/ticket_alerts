@@ -3,6 +3,14 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
+# For email notifications
+import os
+import sendgrid
+from sendgrid.helpers.mail import Mail, Email, To, Content
+# For api key
+from dotenv import load_dotenv
+from pathlib import Path
+
 def main():
 
     op = webdriver.ChromeOptions()
@@ -17,7 +25,7 @@ def main():
     movie = driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div[5]")
     movie.click()
 
-    try_dates = ["0831", "0901", "0902", "0903", "0904",
+    try_dates = ["0830","0831", "0901", "0902", "0903", "0904",
                 "0905", "0906", "0907", "0908", "0909",
                 "0910","0911","0912","0913","0914","0915"]
 
@@ -36,9 +44,27 @@ def main():
 
     if new_date_found:
         print("New date found!")
+        send_email()
     else:
         print("No new dates yet.")
 
+
+def send_email():
+    sg = sendgrid.SendGridAPIClient(api_key=os.getenv("SENDGRID_API_KEY"))
+    
+    from_email = Email("fanis.vlahogiannis@gmail.com")
+    to_email = To("fanis.vlahogiannis@gmail.com")
+    subject = "New dates available for Oppenheimer!"
+    content = Content("text/plain", "**New dates available!**")
+    mail = Mail(from_email, to_email, subject, content)
+
+    # Get a JSON-ready representation of the Mail object
+    mail_json = mail.get()
+
+    # Send an HTTP POST request to /mail/send
+    response = sg.client.mail.send.post(request_body=mail_json)
+    if response.status_code == 202:
+        print("Email notification sent!")
 
 if __name__ == "__main__":
     main()
