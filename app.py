@@ -38,3 +38,7 @@ def main():
         print("New date found!")
     else:
         print("No new dates yet.")
+
+
+if __name__ == "__main__":
+    main()
