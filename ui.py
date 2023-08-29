@@ -1,22 +1,14 @@
-import requests
-from pick import pick
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 
-url = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1"
 
-headers = {
-    "accept": "application/json",
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhYjc1NTc1NThkYzk4ZWQ0YzcxYmFkNGYzMTFiN2ZlMyIsInN1YiI6IjY0ZWRmYjVkYzYxM2NlMDBhYzQzMzllYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6vxxa1o8uge85qcUqMpTwsONg0_A_28s0PXR0xfL1mo"
-}
+op = webdriver.ChromeOptions()
 
-response = requests.get(url, headers=headers)
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
+driver.get('https://www.villagecinemas.gr/WebTicketing/')
 
-data = response.json()
-
-movies = data["results"]
-
-titles = []
-
-for movie in movies:
-    titles.append(movie["original_title"])
-
-selected = pick(titles)
+available_movies = driver.find_elements(By.CLASS_NAME, "media-heading")
+for movie in available_movies:
+    print(movie.accessible_name)
