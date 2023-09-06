@@ -17,11 +17,16 @@ def main():
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
     driver.get('https://www.villagecinemas.gr/WebTicketing/')
 
+    # Cinema selection doesn't get updated, XPath can be used.
     cinema = driver.find_element(By.XPATH, "//*[@id=\"cinemaSelection\"]/div/div/div[1]/a")
     cinema.click()
 
-    movie = driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div[5]")
-    movie.click()
+    try:
+        movie = driver.find_element(By.CSS_SELECTOR, "div[data-vc-movie='HO00105706']")
+        movie.click()
+    except:
+        print("Movie not found")
+        exit()
 
     try_dates = ["0831", "0901", "0902", "0903", "0904",
                 "0905", "0906", "0907", "0908", "0909",
