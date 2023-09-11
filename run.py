@@ -1,6 +1,6 @@
 import time
 from datetime import datetime
-import app
+import check_availability
 import os 
 
 def clear():
@@ -28,7 +28,7 @@ def run_script():
         clear()
         attempt += 1
         print("\nChecking for new dates..")
-        new_date_found = app.main()
+        new_date_found = check_availability.main()
         if new_date_found:
             break
         countdown(interval, attempt)
