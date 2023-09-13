@@ -19,11 +19,12 @@ def main():
     for movie in find_movies:
         link = movie.get_attribute("href")
         movie_links.append(link)
-    total_links = len(movie_links)
 
 
     movies = []
     count = 1 # For terminal info
+    total_links = len(movie_links)
+    
     for link in movie_links:
         
         # Terminal info
