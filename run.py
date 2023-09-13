@@ -4,6 +4,7 @@ import check_availability
 import os 
 
 def clear():
+    """Clear terminal scren"""
     if os.name == 'posix':
         os.system('clear')
     else:
