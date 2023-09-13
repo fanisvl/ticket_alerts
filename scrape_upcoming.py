@@ -6,7 +6,7 @@ import os
 
 def main():
     op = webdriver.ChromeOptions()
-    op.add_argument('headless')
+    #op.add_argument('headless')
 
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
     driver.get('https://www.villagecinemas.gr/el/tainies/prosehos/')
@@ -37,6 +37,7 @@ def main():
         movie_data = {}
         movie_data["title"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name
         movie_data["poster"] = driver.find_element(By.CSS_SELECTOR, "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src")
+        movie_data["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
         movie_data["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
         movies.append(movie_data)
 
