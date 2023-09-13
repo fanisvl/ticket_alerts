@@ -2,10 +2,11 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+import os 
 
 def main():
     op = webdriver.ChromeOptions()
-    # op.add_argument('headless')
+    op.add_argument('headless')
 
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
     driver.get('https://www.villagecinemas.gr/el/tainies/prosehos/')
@@ -18,10 +19,19 @@ def main():
     for movie in find_movies:
         link = movie.get_attribute("href")
         movie_links.append(link)
+    total_links = len(movie_links)
 
-    # Get data for each movie
+
     movies = []
+    count = 1 # For terminal info
     for link in movie_links:
+        
+        # Terminal info
+        clear()
+        print("Collecting data... " + str(count) + "/" + str(total_links))
+        count += 1
+
+        # Collect data
         driver.get(link)
         movie_data = {}
         movie_data["title"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name
@@ -31,6 +41,13 @@ def main():
 
     print(movies)
 
+
+def clear():
+    """"Clear terminal screen"""
+    if os.name == 'posix':
+        os.system('clear')
+    else:
+        os.system('cls')
 
 if __name__ == "__main__":
     main()
