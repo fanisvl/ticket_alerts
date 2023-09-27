@@ -29,7 +29,8 @@ def run_script():
         clear()
         attempt += 1
         print("\nChecking for new dates..")
-        new_date_found = check_availability.main()
+        # pass interval here and implement the while loop inside check_availability
+        new_date_found = check_availability.main() 
         if new_date_found:
             break
         countdown(interval, attempt)
