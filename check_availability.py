@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from send_email import send_email
 
 from time import sleep
+from terminal_ui import wait
 
 
 
@@ -27,7 +28,9 @@ def main():
         print("Movie not found")
         exit()
 
+    attempt = 0
     while True:
+        attempt+=1
         # Should be implemented using dates library
         try_dates = ["1005"]
         new_date_found = False
@@ -45,8 +48,7 @@ def main():
             break
         else:
             print("== No new dates yet. == ")
-            interval = 3 # temporary
-            sleep(interval)
+            wait(10, attempt)
             driver.refresh()
 
 
