@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import os 
+import json
 
 def scrape_upcoming():
     op = webdriver.ChromeOptions()
@@ -21,7 +22,6 @@ def scrape_upcoming():
         movie_links.append(link)
 
 
-    movies = []
     count = 1 # For terminal info
     total_links = len(movie_links)
     
@@ -39,9 +39,8 @@ def scrape_upcoming():
         movie_data["poster"] = driver.find_element(By.CSS_SELECTOR, "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src")
         movie_data["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
         movie_data["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
-        movies.append(movie_data)
 
-    return movies
+    return movie_data
 
 
 def clear():
