@@ -40,7 +40,8 @@ def scrape_upcoming():
         movie_data["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
         movie_data["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
 
-    return movie_data
+    output = open("upcoming_movies.json", "w")
+    json.dump(movie_data, output)
 
 
 def clear():
