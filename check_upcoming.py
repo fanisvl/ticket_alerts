@@ -19,7 +19,7 @@ def main():
     titles = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     titles = [title.accessible_name for title in titles]
 
-    #TODO:  Receive upcoming titles from scrape_upcoming
+    #TODO:  Read upcoming_titles from a json file format (produced by scrape_upcoming)
     find_movie = input("Search for movie: ")
 
     attempt = 0
