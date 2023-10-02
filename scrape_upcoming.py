@@ -4,7 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import os 
 
-def main():
+def scrape_upcoming():
     op = webdriver.ChromeOptions()
     #op.add_argument('headless')
 
@@ -41,7 +41,7 @@ def main():
         movie_data["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
         movies.append(movie_data)
 
-    print(movies)
+    return movies
 
 
 def clear():
@@ -52,4 +52,4 @@ def clear():
         os.system('cls')
 
 if __name__ == "__main__":
-    main()
+    scrape_upcoming()
