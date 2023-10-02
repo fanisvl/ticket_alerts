@@ -23,17 +23,20 @@ def main():
     find_movie = input("Search for movie: ")
 
     attempt = 0
+    movieFound = False
     while True:
         attempt += 1
         for title in titles:
-            if (title.__contains__(find_movie.upper())):
-                print(title)
-                send_email("fanis.vlahogiannis@gmail.com", "New dates found!", "New dates available")
-                print("Movie has been released!")
-            else:
-                print(" Movie has not released yet")
-                wait(10, attempt)
-                driver.refresh()
+            if title.__contains__(find_movie.upper()):
+                movieFound = True
+
+        if movieFound:
+            print(find_movie.capitalize() + " found")
+            send_email("fanis.vlahogiannis@gmail.com", "New dates found!", "New dates available")
+            break
+        else:
+            wait(10, attempt)
+            driver.refresh()
 
 if __name__ == "__main__":
     main()
