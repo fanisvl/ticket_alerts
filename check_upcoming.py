@@ -20,6 +20,8 @@ def main():
     titles = [title.accessible_name for title in titles]
 
     #TODO:  Read upcoming_titles from a json file format (produced by scrape_upcoming)
+
+    #TODO: Use pick library to search 
     find_movie = input("Search for movie: ")
 
     attempt = 0
