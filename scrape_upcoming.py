@@ -49,7 +49,7 @@ def scrape_upcoming():
         movies.append(movie_data)
 
     output = open("upcoming_movies.json", "w")
-    json.dump(movies, output, indent=6)
+    json.dump(movies, output, indent=6, ensure_ascii=False)
 
 
 def clear():
