@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from send_email import send_email
 from terminal_ui import wait
 import json
+from pick import pick
 
 def main():
     # Initialize browser
@@ -24,8 +25,9 @@ def main():
     for movie in upcoming_movies:
         upcoming_titles.append(movie["title"])
         
-    #TODO: Use pick library to search 
-    find_movie = input("Search for movie: ")
+    # Select from upcoming_titles using pick 
+    title = 'Select an upcoming movie to track: '
+    find_movie = pick(upcoming_titles, title)[0]
 
     attempt = 0
     movieFound = False
