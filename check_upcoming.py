@@ -8,6 +8,18 @@ import json
 from pick import pick
 
 def main():
+
+    # Read upcoming_movies.json (created by scrape_upcoming.py)
+    upcoming_movies = json.load(open("upcoming_movies.json"))
+    upcoming_titles = []
+    for movie in upcoming_movies:
+        upcoming_titles.append(movie["title"])
+        upcoming_titles.append("oppenheimer")
+        
+    # Select from upcoming_titles using pick 
+    title = 'Select an upcoming movie to track: '
+    find_movie = pick(upcoming_titles, title)[0] # returns tuple (option_picked, index)
+
     # Initialize browser
     op = webdriver.ChromeOptions()
     # op.add_argument('headless') 
@@ -16,18 +28,9 @@ def main():
     driver.get('https://www.villagecinemas.gr/WebTicketing/')
 
 
+    # TODO: Rename titles to available_titles
     titles = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     titles = [title.accessible_name for title in titles]
-
-    # Read upcoming_movies.json (created by scrape_upcoming.py)
-    upcoming_movies = json.load(open("upcoming_movies.json"))
-    upcoming_titles = []
-    for movie in upcoming_movies:
-        upcoming_titles.append(movie["title"])
-        
-    # Select from upcoming_titles using pick 
-    title = 'Select an upcoming movie to track: '
-    find_movie = pick(upcoming_titles, title)[0]
 
     attempt = 0
     movieFound = False
