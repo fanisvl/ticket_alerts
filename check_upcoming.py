@@ -2,10 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-
 from send_email import send_email
-
 from terminal_ui import wait
+import json
 
 def main():
     # Initialize browser
@@ -19,8 +18,12 @@ def main():
     titles = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     titles = [title.accessible_name for title in titles]
 
-    #TODO:  Read upcoming_titles from a json file format (produced by scrape_upcoming)
-
+    # Read upcoming_movies.json (created by scrape_upcoming.py)
+    upcoming_movies = json.load(open("upcoming_movies.json"))
+    upcoming_titles = []
+    for movie in upcoming_movies:
+        upcoming_titles.append(movie["title"])
+        
     #TODO: Use pick library to search 
     find_movie = input("Search for movie: ")
 
