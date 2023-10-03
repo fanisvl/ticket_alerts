@@ -44,8 +44,8 @@ def scrape_upcoming():
             movie_data["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
             movie_data["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
         except:
-            error_log = open("scrape_upcoming_error_log.txt", "a")
-            error_log.write(f"{movie_data['title']} - Could not collect all data for this movie")
+            warning_log = open("scrape_upcoming_warning_log.txt", "a")
+            warning_log.write(f"{movie_data['title']} - Could not collect all data for this movie")
         movies.append(movie_data)
 
     output = open("upcoming_movies.json", "w")

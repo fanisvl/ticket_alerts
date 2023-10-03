@@ -2,4 +2,4 @@
 .venv/
 __pycache__/
 upcoming_movies.json
-scrape_upcoming_error_log.txt
+scrape_upcoming_warning_log.txt
