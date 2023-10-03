@@ -15,7 +15,7 @@ def main():
     for movie in upcoming_movies:
         upcoming_titles.append(movie["title"])
 
-    upcoming_titles.append("oppenheimer") # for testing
+    upcoming_titles.append("Oppenheimer") # for testing
 
     # Select from upcoming_titles using pick 
     title = 'Select an upcoming movie to track: '
