@@ -42,7 +42,7 @@ def main():
 
         if movieFound:
             print(find_movie.capitalize() + " found")
-            send_email("fanis.vlahogiannis@gmail.com", "New dates found!", "New dates available")
+            send_email("fanis.vlahogiannis@gmail.com", f"Tickets available for {find_movie.capitalize()}", f"Tickets available for {find_movie.capitalize()}")
             break
         else:
             wait(10, attempt)
