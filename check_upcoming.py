@@ -29,14 +29,14 @@ def main():
 
 
     # TODO: Rename titles to available_titles
-    titles = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
-    titles = [title.accessible_name for title in titles]
+    available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
+    available_titles = [title.accessible_name for title in available_title_elements]
 
     attempt = 0
     movieFound = False
     while True:
         attempt += 1
-        for title in titles:
+        for title in available_titles:
             if title.__contains__(find_movie.upper()):
                 movieFound = True
 
