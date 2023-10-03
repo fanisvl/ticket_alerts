@@ -29,7 +29,6 @@ def main():
     driver.get('https://www.villagecinemas.gr/WebTicketing/')
 
 
-    # TODO: Rename titles to available_titles
     available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     available_titles = [title.accessible_name for title in available_title_elements]
 
