@@ -1,10 +1,12 @@
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import os 
+import json
 
-def main():
+def scrape_upcoming():
     op = webdriver.ChromeOptions()
     #op.add_argument('headless')
 
@@ -21,10 +23,9 @@ def main():
         movie_links.append(link)
 
 
-    movies = []
     count = 1 # For terminal info
     total_links = len(movie_links)
-    
+    movies = []
     for link in movie_links:
         
         # Terminal info
@@ -33,15 +34,22 @@ def main():
         count += 1
 
         # Collect data
+        print(link)
+        print()
         driver.get(link)
         movie_data = {}
-        movie_data["title"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name
-        movie_data["poster"] = driver.find_element(By.CSS_SELECTOR, "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src")
-        movie_data["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
-        movie_data["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
+        try: 
+            movie_data["title"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name
+            movie_data["poster"] = driver.find_element(By.CSS_SELECTOR, "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src")
+            movie_data["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
+            movie_data["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
+        except:
+            warning_log = open("scrape_upcoming_warning_log.txt", "a")
+            warning_log.write(f"{movie_data['title']} - Could not collect all data for this movie")
         movies.append(movie_data)
 
-    print(movies)
+    output = open("upcoming_movies.json", "w")
+    json.dump(movies, output, indent=6, ensure_ascii=False)
 
 
 def clear():
@@ -52,4 +60,4 @@ def clear():
         os.system('cls')
 
 if __name__ == "__main__":
-    main()
+    scrape_upcoming()

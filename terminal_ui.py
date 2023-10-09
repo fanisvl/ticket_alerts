@@ -14,7 +14,7 @@ def wait(duration, attempt):
     time_left = duration
     while time_left > 0:
             clear()
-            print("== No new dates yet. == (" + str(attempt) + ")")
+            print("== Movie has not been released yet. == (" + str(attempt) + ")")
             print("Next check in ", time_left, "min")
             time.sleep(60)
             time_left -= 1
