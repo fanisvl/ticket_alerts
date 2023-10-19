@@ -22,6 +22,8 @@ def main():
 
     attempt = 0
     movieFound = False
+
+    # Replace with database logic
     while True:
         attempt += 1
         for title in available_titles:
