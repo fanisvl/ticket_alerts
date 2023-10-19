@@ -20,10 +20,9 @@ def main():
     available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     available_titles = [title.accessible_name for title in available_title_elements]
 
+    # Replace with database logic
     attempt = 0
     movieFound = False
-
-    # Replace with database logic
     while True:
         attempt += 1
         for title in available_titles:
