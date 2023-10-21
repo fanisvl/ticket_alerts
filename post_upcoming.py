@@ -1,8 +1,6 @@
 import mysql.connector
 from dotenv import load_dotenv
 import os
-import json # temporary'
-
 
 load_dotenv()
 db = mysql.connector.connect(
