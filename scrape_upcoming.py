@@ -1,10 +1,9 @@
-import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import os 
-import json
+from post_upcoming import post_upcoming
 
 def scrape_upcoming():
     op = webdriver.ChromeOptions()
@@ -48,8 +47,7 @@ def scrape_upcoming():
             warning_log.write(f"{movie_data['title']} - Could not collect all data for this movie")
         movies.append(movie_data)
 
-    output = open("upcoming_movies.json", "w")
-    json.dump(movies, output, indent=6, ensure_ascii=False)
+    post_upcoming(movies)
 
 
 def clear():
