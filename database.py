@@ -32,7 +32,8 @@ def update_upcoming(movies):
     db.commit()
 
 def delete_released_movies(movies):
-    upcoming_titles = [movies["title"] for movie in movies]
+    
+    upcoming_titles = [movie["title"] for movie in movies]
     cursor.execute("SELECT title FROM upcoming_movies")
     stored_titles = [row[0] for row in cursor.fetchall()]
     movies_to_remove = [title for title in stored_titles if title not in upcoming_titles]
