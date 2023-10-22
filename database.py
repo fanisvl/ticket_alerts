@@ -35,11 +35,21 @@ def movie_exists(title):
     count = cursor.fetchone()[0]
     return count > 0
 
-def get_upcoming():
-    query = """SELECT id, title FROM upcoming_movies"""
+def get_upcoming_titles():
+    query = """SELECT title FROM upcoming_movies"""
     cursor.execute(query)
     upcoming_movies = []
     for movie in cursor:
         upcoming_movies.append(movie)
 
     return upcoming_movies
+
+def get_id_by_title(title):
+    query = f"SELECT id FROM upcoming_movies WHERE title='{title}'"
+    cursor.execute(query)
+    result = cursor.fetchone()
+    if result:
+        id = result[0]
+        return id
+    else:
+        return None
