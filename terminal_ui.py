@@ -8,6 +8,7 @@ def main():
     prompt = 'Select an upcoming movie to track: '
     # pick returns tuple (option_picked, index)
     selected_title = pick(upcoming_titles, prompt)[0] 
+    print(f"You selected {selected_title}.")
 
     email = input("Enter your email to be notified: ") or "fanis.vlahogiannis@gmail.com" # default
 
@@ -15,7 +16,7 @@ def main():
     selected_id = get_id_by_title(selected_title)
     post_tracked(email, selected_id)
 
-    print(f"\n Success! You are now tracking {selected_title}.")
+    print(f"\nSuccess! You are now tracking {selected_title}.")
     
 
 
