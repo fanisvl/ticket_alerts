@@ -3,9 +3,8 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from send_email import send_email
-from terminal_ui import wait
-import json
-from pick import pick
+from time import sleep
+import os
 
 def main():
 
@@ -36,6 +35,25 @@ def main():
         else:
             wait(10, attempt)
             driver.refresh()
+
+
+def clear():
+    """Clear terminal scren"""
+    if os.name == 'posix':
+        os.system('clear')
+    else:
+        os.system('cls')
+
+
+def wait(duration, attempt):
+    """"Counts down from specified minute value"""
+    time_left = duration
+    while time_left > 0:
+            clear()
+            print("== Movie has not been released yet. == (" + str(attempt) + ")")
+            print("Next check in ", time_left, "min")
+            sleep(60)
+            time_left -= 1
 
 if __name__ == "__main__":
     main()
