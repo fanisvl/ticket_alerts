@@ -17,8 +17,6 @@ def main():
     post_alert(email, selected_id)
 
     print(f"\nSuccess! You are now tracking {selected_title}.")
-    
-
 
 if __name__ == "__main__":
     main()
