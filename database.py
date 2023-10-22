@@ -38,11 +38,11 @@ def movie_exists(title):
 def get_upcoming_titles():
     query = """SELECT title FROM upcoming_movies"""
     cursor.execute(query)
-    upcoming_movies = []
+    upcoming_titles = []
     for movie in cursor:
-        upcoming_movies.append(movie)
+        upcoming_titles.append(movie[0])
 
-    return upcoming_movies
+    return upcoming_titles
 
 def get_id_by_title(title):
     query = f"SELECT id FROM upcoming_movies WHERE title='{title}'"
@@ -53,3 +53,8 @@ def get_id_by_title(title):
         return id
     else:
         return None
+    
+def post_tracked(email, id):
+    insert_query =  "INSERT INTO tracked (email, movie_id) VALUES (%s, %s)"
+    cursor.execute(insert_query, (email, id))
+    db.commit()
