@@ -1,22 +1,22 @@
-import json
 from pick import pick
+from database import get_upcoming_titles, get_id_by_title, post_tracked
 
 
 def main():
-    # Read upcoming_movies.json (created by scrape_upcoming.py)
-    upcoming_movies = json.load(open("upcoming_movies.json"))
-    upcoming_titles = []
-    for movie in upcoming_movies:
-        upcoming_titles.append(movie["title"])
 
-    upcoming_titles.append("Oppenheimer") # for testing
+    upcoming_titles = get_upcoming_titles()
+    prompt = 'Select an upcoming movie to track: '
+    # pick returns tuple (option_picked, index)
+    selected_title = pick(upcoming_titles, prompt)[0] 
 
-    # Select from upcoming_titles using pick 
-    title = 'Select an upcoming movie to track: '
-    track_movie = pick(upcoming_titles, title)[0] # returns tuple (option_picked, index)
+    email = input("Enter your email to be notified: ") or "fanis.vlahogiannis@gmail.com" # default
 
-    email = input("Enter your email to be notified: ") or "fanis.vlahogiannis@gmail.com" # if no input is entered
-    return (track_movie, email)
+    # Post (email, tracked_movie_id) to tracked table in db
+    selected_id = get_id_by_title(selected_title)
+    post_tracked(email, selected_id)
+
+    print(f"\n Success! You are now tracking {selected_title}.")
+    
 
 
 if __name__ == "__main__":
