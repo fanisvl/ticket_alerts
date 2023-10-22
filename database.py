@@ -12,7 +12,7 @@ db = mysql.connector.connect(
 
 cursor = db.cursor(buffered=True)
 
-
+# Upcoming
 def post_upcoming(movies):
     insert_query = """
                 INSERT INTO upcoming_movies (title, poster, premier, trailer)
@@ -44,6 +44,28 @@ def get_upcoming_titles():
 
     return upcoming_titles
 
+# Alerts
+def post_alert(email, id):
+    insert_query =  "INSERT INTO alerts (email, movie_id) VALUES (%s, %s)"
+    cursor.execute(insert_query, (email, id))
+    db.commit()
+
+def delete_alert(id):
+    query = f"DELETE FROM alerts WHERE alert_id = {id}"
+    cursor.execute(query)
+    db.commit()
+
+def get_alerts():
+    """Returns list of alerts table rows. Format: (alert_id, email, movie_id)"""
+
+    query = "SELECT * FROM alerts"
+    cursor.execute(query)
+    alerts = []
+    for alert in cursor:
+        alerts.append(alert)
+    return alerts
+
+#  Title <> ID
 def get_id_by_title(title):
     query = f"SELECT id FROM upcoming_movies WHERE title='{title}'"
     cursor.execute(query)
@@ -54,18 +76,12 @@ def get_id_by_title(title):
     else:
         return None
     
-def post_alert(email, id):
-    insert_query =  "INSERT INTO alerts (email, movie_id) VALUES (%s, %s)"
-    cursor.execute(insert_query, (email, id))
-    db.commit()
-
-def get_alerts():
-    """Returns list of alerts table rows. Format: (track_id, email, _movie_id)"""
-
-    query = "SELECT * FROM alerts"
+def get_title_by_id(id):
+    query = f"SELECT id FROM upcoming_movies WHERE id='{id}'"
     cursor.execute(query)
-    alerts = []
-    for alert in cursor:
-        alerts.append(alert)
-
-    return alerts
+    result = cursor.fetchone()
+    if result:
+        title = result[0]
+        return title
+    else:
+        return None
