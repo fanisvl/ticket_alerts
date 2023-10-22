@@ -58,3 +58,16 @@ def post_tracked(email, id):
     insert_query =  "INSERT INTO tracked (email, movie_id) VALUES (%s, %s)"
     cursor.execute(insert_query, (email, id))
     db.commit()
+
+def get_tracked():
+    """Returns list of tracked table rows. Format: (track_id, email, _movie_id)"""
+    
+    query = "SELECT * FROM tracked"
+    cursor.execute(query)
+    tracked = []
+    for track in cursor:
+        tracked.append(track)
+
+    return tracked
+
+get_tracked()
