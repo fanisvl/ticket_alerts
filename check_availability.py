@@ -12,22 +12,31 @@ def main():
     # Initialize browser
     op = webdriver.ChromeOptions()
     # op.add_argument('headless') 
+
+    # Install webdriver
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
 
-    driver.get('https://www.villagecinemas.gr/WebTicketing/')
+    attempt = 1
+    while True:
 
-    available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
-    available_titles = [title.accessible_name for title in available_title_elements]
+        driver = webdriver.Chrome()
+        driver.get('https://www.villagecinemas.gr/WebTicketing/')
+        
+        available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
+        available_titles = [title.accessible_name for title in available_title_elements]
 
-    alerts = get_alerts()
-    for alert in alerts:
-         alert_id = alert[0]
-         email = alert[1]
-         movie_id = alert[2]
-         title = get_title_by_id(movie_id)
-         if title in available_titles:
-              send_email(email, f"Tickets available for {title.capitalize()}", "Tickets now available!")
-              delete_alert(alert_id)
+        alerts = get_alerts()
+        for alert in alerts:
+            alert_id = alert[0]
+            email = alert[1]
+            movie_id = alert[2]
+            title = get_title_by_id(movie_id)
+            if title in available_titles:
+                send_email(email, f"Tickets available for {title.capitalize()}", "Tickets now available!")
+                delete_alert(alert_id)
+        driver.close()
+        wait(10, attempt)
+        attempt += 1
 
 
 def clear():
@@ -38,14 +47,14 @@ def clear():
         os.system('cls')
 
 
-def wait(duration, attempt):
+def wait(minute_interval, attempt):
     """"Counts down from specified minute value"""
-    time_left = duration
+    time_left = minute_interval
     while time_left > 0:
             clear()
-            print("== Movie has not been released yet. == (" + str(attempt) + ")")
+            print(f"Check No.{attempt}")
             print("Next check in ", time_left, "min")
-            sleep(60)
+            sleep(1) # Change back to 60
             time_left -= 1
 
 if __name__ == "__main__":
