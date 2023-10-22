@@ -34,3 +34,12 @@ def movie_exists(title):
     cursor.execute(query, (title,))
     count = cursor.fetchone()[0]
     return count > 0
+
+def get_upcoming():
+    query = """SELECT id, title FROM upcoming_movies"""
+    cursor.execute(query)
+    upcoming_movies = []
+    for movie in cursor:
+        upcoming_movies.append(movie)
+
+    return upcoming_movies
