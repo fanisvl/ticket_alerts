@@ -1,5 +1,5 @@
 from pick import pick
-from database import get_upcoming_titles, get_id_by_title, post_tracked
+from database import get_upcoming_titles, get_id_by_title, post_alert
 
 
 def main():
@@ -14,7 +14,7 @@ def main():
 
     # Post (email, tracked_movie_id) to tracked table in db
     selected_id = get_id_by_title(selected_title)
-    post_tracked(email, selected_id)
+    post_alert(email, selected_id)
 
     print(f"\nSuccess! You are now tracking {selected_title}.")
     
