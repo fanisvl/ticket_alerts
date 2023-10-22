@@ -61,7 +61,7 @@ def post_tracked(email, id):
 
 def get_tracked():
     """Returns list of tracked table rows. Format: (track_id, email, _movie_id)"""
-    
+
     query = "SELECT * FROM tracked"
     cursor.execute(query)
     tracked = []
@@ -69,5 +69,3 @@ def get_tracked():
         tracked.append(track)
 
     return tracked
-
-get_tracked()
