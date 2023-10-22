@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import os 
-from post_upcoming import post_upcoming
+from database import post_upcoming
 
 def scrape_upcoming():
     op = webdriver.ChromeOptions()
