@@ -13,7 +13,9 @@ db = mysql.connector.connect(
 cursor = db.cursor(buffered=True)
 
 # Upcoming
-def post_upcoming(movies):
+def update_upcoming(movies):
+    # Movies that are no longer upcoming should be removed.
+    delete_released_movies(movies)
     insert_query = """
                 INSERT INTO upcoming_movies (title, poster, premier, trailer)
                 VALUES (%s, %s, %s, %s)"""
@@ -28,6 +30,16 @@ def post_upcoming(movies):
             cursor.execute(insert_query, data_to_insert)
 
     db.commit()
+
+def delete_released_movies(movies):
+    upcoming_titles = [movies["title"] for movie in movies]
+    cursor.execute("SELECT title FROM upcoming_movies")
+    stored_titles = [row[0] for row in cursor.fetchall()]
+    movies_to_remove = [title for title in stored_titles if title not in upcoming_titles]
+    for title in movies_to_remove:
+        delete_query = f"DELETE FROM upcoming_movies WHERE title = {title}"
+        cursor.execute(delete_query)
+        db.commit()
 
 def movie_exists(title):
     query = "SELECT COUNT(*) FROM upcoming_movies WHERE title = %s"

@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import os 
-from database import post_upcoming
+from database import update_upcoming
 
 def scrape_upcoming():
     op = webdriver.ChromeOptions()
@@ -47,7 +47,7 @@ def scrape_upcoming():
             warning_log.write(f"{movie_data['title']} - Could not collect all data for this movie")
         movies.append(movie_data)
 
-    post_upcoming(movies)
+    update_upcoming(movies)
 
 
 def clear():
