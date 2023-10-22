@@ -54,18 +54,18 @@ def get_id_by_title(title):
     else:
         return None
     
-def post_tracked(email, id):
-    insert_query =  "INSERT INTO tracked (email, movie_id) VALUES (%s, %s)"
+def post_alert(email, id):
+    insert_query =  "INSERT INTO alerts (email, movie_id) VALUES (%s, %s)"
     cursor.execute(insert_query, (email, id))
     db.commit()
 
-def get_tracked():
-    """Returns list of tracked table rows. Format: (track_id, email, _movie_id)"""
+def get_alerts():
+    """Returns list of alerts table rows. Format: (track_id, email, _movie_id)"""
 
-    query = "SELECT * FROM tracked"
+    query = "SELECT * FROM alerts"
     cursor.execute(query)
-    tracked = []
-    for track in cursor:
-        tracked.append(track)
+    alerts = []
+    for alert in cursor:
+        alerts.append(alert)
 
-    return tracked
+    return alerts
