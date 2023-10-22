@@ -10,7 +10,7 @@ db = mysql.connector.connect(
     database="ticket_availability"
 )
 
-cursor = db.cursor()
+cursor = db.cursor(buffered=True)
 
 
 def post_upcoming(movies):
