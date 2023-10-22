@@ -18,8 +18,7 @@ def post_upcoming(movies):
                 INSERT INTO upcoming_movies (title, poster, premier, trailer)
                 VALUES (%s, %s, %s, %s)"""
     for movie in movies:
-        title = movie["title"]
-        if not movie_exists(title):
+        if not movie_exists(movie["title"]):
             data_to_insert = (
                 movie["title"],
                 movie["poster"],
