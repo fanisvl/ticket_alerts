@@ -77,7 +77,7 @@ def get_id_by_title(title):
         return None
     
 def get_title_by_id(id):
-    query = f"SELECT id FROM upcoming_movies WHERE id='{id}'"
+    query = f"SELECT title FROM upcoming_movies WHERE id='{id}'"
     cursor.execute(query)
     result = cursor.fetchone()
     if result:
