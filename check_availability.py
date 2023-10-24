@@ -22,6 +22,7 @@ def main():
         driver = webdriver.Chrome()
         driver.get('https://www.villagecinemas.gr/WebTicketing/')
         
+        # The h5.media-heading selector includes titles in both english & greek
         available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
         available_titles = [title.accessible_name for title in available_title_elements]
 
