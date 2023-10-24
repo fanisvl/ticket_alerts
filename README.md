@@ -2,27 +2,22 @@
 When Oppenheimer (2023) released it was quite hard to obtain good seats so I needed a way to receive email notifications the moment new tickets became available.
 I'm expanding this project to create a web application that allows users to select any upcoming movie on Village Cinemas, enter their email & be notified when tickets become available.
 
-## Components
+# Components
 
-1. **Upcoming Movies Scraper**:
-    - Scrapes upcoming movies data from the Village Cinemas website.
-    - Stores the scraped data in a database.
-      
-2. **API to Get Upcoming Movies**:
-    - Provides an API endpoint to retrieve data for upcoming movies.
-      
-3. **User Interface**:
-    - User selects a movie and enters their email to be notified.
-    - Store the user's email and the selected movie in the database.
-      
-4. **Availability Check Script**:
-    - Runs a script at regular intervals to check ticket availability of **tracked** movies.
-    - Sends email notifications to users if tickets are available.
+## A. scrape_upcoming.py:
 
-## Learning Objectives
+1. Scrape upcoming movie data from [villagecinemas.com/prosehos](http://villagecinemas.com/prosehos) **:** *Title, Poster URL, Premier Date, Trailer URL
+2. Store data to database → UPCOMING_MOVIES table 
 
-- Utilize a headless browser with the Selenium library to gather information from a dynamic website.
-- Use the SendGrid API to send email notifications.
-- Employ environmental variables to protect secret API keys.
-- Utilize a virtual environment and publish a requirements.txt file to achieve reproducible results.
-- Run the code on an AWS EC2 instance.
+## B. Terminal UI:
+
+1. User selects an upcoming movie FROM → UPCOMING_MOVIES table
+2. User enters email
+3. Store email & selected movie TO → ALERTS table
+
+## C. check_availability.py:
+
+1. Scrape available_titles
+2. Check if available_titles contain titles with alerts → from ALERTS table
+3. If a match is found send notification.
+4. Delete alert → from ALERTS table
