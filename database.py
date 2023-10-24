@@ -69,7 +69,7 @@ def delete_alert(id):
     db.commit()
 
 def get_alerts():
-    """Returns list of alerts table rows. Format: (alert_id, email, movie_id)"""
+    """Returns tuple of alerts table rows. Format: (alert_id, email, movie_id)"""
 
     query = "SELECT * FROM alerts"
     cursor.execute(query)

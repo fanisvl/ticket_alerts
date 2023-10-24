@@ -25,7 +25,7 @@ def main():
         available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
         available_titles = [title.accessible_name for title in available_title_elements]
 
-        alerts = get_alerts()
+        alerts = get_alerts() # (alert_id, email, movie_id)
         for alert in alerts:
             alert_id = alert[0]
             email = alert[1]
