@@ -34,7 +34,7 @@ def scrape_upcoming():
         pass # No second page
 
     count = 1 # For terminal info
-    movies = []
+    movie_data = []
     for link in movie_links:
         
         # Terminal info
@@ -46,18 +46,18 @@ def scrape_upcoming():
         print(link)
         print()
         driver.get(link)
-        movie_data = {}
+        current_movie = {}
         try: 
-            movie_data["title"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name
-            movie_data["poster"] = driver.find_element(By.CSS_SELECTOR, "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src")
-            movie_data["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
-            movie_data["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
+            current_movie["title"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name
+            current_movie["poster"] = driver.find_element(By.CSS_SELECTOR, "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src")
+            current_movie["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
+            current_movie["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
         except:
             warning_log = open("scrape_upcoming_warning_log.txt", "a")
-            warning_log.write(f"{movie_data['title']} - Could not collect all data for this movie")
-        movies.append(movie_data)
+            warning_log.write(f"{current_movie['title']} - Could not collect all data for this movie")
+        movie_data.append(current_movie)
 
-    update_upcoming(movies)
+    update_upcoming(movie_data)
 
 
 def find_movie_links():
