@@ -5,23 +5,37 @@ from selenium.webdriver.common.by import By
 import os 
 from database import update_upcoming
 
+
+# Setup webdriver
+op = webdriver.ChromeOptions()
+#op.add_argument('headless')
+
+# Driver doesn't need to be installed every time scrape_upcoming is run
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
+
 def scrape_upcoming():
-    op = webdriver.ChromeOptions()
-    #op.add_argument('headless')
 
-    # Driver doesn't need to be installed every time scrape_upcoming is run
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
-    driver.get('https://www.villagecinemas.gr/el/tainies/prosehos/')
+    driver.get('https://www.villagecinemas.gr/el/tainies/prosehos/?pg=0')
 
+    # Grab first page movie links
+    movie_links = find_movie_links()
 
-    find_movies = driver.find_elements(By.CSS_SELECTOR, "div[class='box_title'] > h2 > a")
-    movie_links = []
+    # Grab second page links
+    # Assuming that when there's no second page, there is no '02' page link
+    # Assuming no more than 2 pages (40 upcoming movies)
+    try:
+        go_to_second_page = driver.find_element(By.CSS_SELECTOR, "#ContentPlaceHolderDefault_ContentPlaceHolder1_movies_comingsoon_Pager_lvPager_hnum_1")
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);") # Scroll to bottom
+        go_to_second_page.click()
 
-    # Grab movie links
-    for movie in find_movies:
-        link = movie.get_attribute("href")
-        movie_links.append(link)
+        # Grab second page movie links
+        movie_links.extend(find_movie_links())
+        print(f"Total links from both pages {len(movie_links)}")
+        print()
+        print(movie_links)
 
+    except:
+        print("There's no second page")
 
     count = 1 # For terminal info
     total_links = len(movie_links)
@@ -49,6 +63,19 @@ def scrape_upcoming():
         movies.append(movie_data)
 
     update_upcoming(movies)
+
+
+def find_movie_links():
+    """Returns list of movie links movie_links"""
+    movie_links = []
+    find_movies = driver.find_elements(By.CSS_SELECTOR, "div[class='box_title'] > h2 > a")
+
+    for movie in find_movies:
+        link = movie.get_attribute("href")
+        movie_links.append(link)
+    
+    return movie_links
+
 
 
 def clear():
