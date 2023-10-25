@@ -9,6 +9,7 @@ def scrape_upcoming():
     op = webdriver.ChromeOptions()
     #op.add_argument('headless')
 
+    # Driver doesn't need to be installed every time scrape_upcoming is run
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
     driver.get('https://www.villagecinemas.gr/el/tainies/prosehos/')
 
