@@ -30,21 +30,16 @@ def scrape_upcoming():
 
         # Grab second page movie links
         movie_links.extend(find_movie_links())
-        print(f"Total links from both pages {len(movie_links)}")
-        print()
-        print(movie_links)
-
     except:
-        print("There's no second page")
+        pass # No second page
 
     count = 1 # For terminal info
-    total_links = len(movie_links)
     movies = []
     for link in movie_links:
         
         # Terminal info
         clear()
-        print("Collecting data... " + str(count) + "/" + str(total_links))
+        print(f"Collecting data... {count}/{len(movie_links)}")
         count += 1
 
         # Collect data
