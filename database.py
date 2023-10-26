@@ -4,10 +4,10 @@ import os
 
 load_dotenv()
 db = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password=os.getenv("DB_PASS"),
-    database="ticket_availability"
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USERNAME"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME")
 )
 
 cursor = db.cursor(buffered=True)
