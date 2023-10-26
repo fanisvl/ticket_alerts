@@ -8,7 +8,7 @@ from database import update_upcoming
 
 # Setup webdriver
 op = webdriver.ChromeOptions()
-#op.add_argument('headless')
+op.add_argument('headless')
 
 # Driver doesn't need to be installed every time scrape_upcoming is run
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
