@@ -15,8 +15,10 @@ def main():
     # Install webdriver
     try:
         driver = webdriver.Chrome()
+        print("Didn't have to install")
     except:
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
+        print("Had to install")
 
 
     driver.get('https://www.villagecinemas.gr/WebTicketing/')
