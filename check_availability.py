@@ -10,20 +10,14 @@ def main():
 
     # Initialize browser
     op = webdriver.ChromeOptions()
-    # op.add_argument('headless') 
+    op.add_argument('headless') 
 
-    # Install webdriver
-    try:
-        driver = webdriver.Chrome()
-        print("Didn't have to install")
-    except:
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
-        print("Had to install")
-
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
 
     driver.get('https://www.villagecinemas.gr/WebTicketing/')
 
-    exit()
+    exit() # Testing until this point for now.
+    
     # The h5.media-heading selector includes titles in both english & greek
     available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     available_titles = [title.accessible_name for title in available_title_elements]
