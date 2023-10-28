@@ -43,9 +43,7 @@ def delete_released_movies(scraped_movies):
     """
     
     scraped_titles = [movie["title"] for movie in scraped_movies]
-
-    cursor.execute("SELECT title FROM upcoming_movies")
-    stored_titles = [row[0] for row in cursor.fetchall()]
+    stored_titles = get_stored_titles()
 
     movies_to_remove = [title for title in stored_titles if title not in scraped_titles]
     for title in movies_to_remove:
@@ -59,14 +57,10 @@ def movie_exists(title):
     count = cursor.fetchone()[0]
     return count > 0
 
-def get_upcoming_titles():
-    query = """SELECT title FROM upcoming_movies"""
-    cursor.execute(query)
-    upcoming_titles = []
-    for movie in cursor:
-        upcoming_titles.append(movie[0])
-
-    return upcoming_titles
+def get_stored_titles():
+    cursor.execute("SELECT title FROM upcoming_movies")
+    stored_titles = [row[0] for row in cursor.fetchall()]
+    return stored_titles
 
 # Alerts
 def post_alert(email, id):
