@@ -13,13 +13,13 @@ db = mysql.connector.connect(
 cursor = db.cursor(buffered=True)
 
 # Upcoming
-def update_upcoming(movies):
+def update_upcoming(scraped_movies):
     # Movies that are no longer upcoming should be removed.
-    delete_released_movies(movies)
+    delete_released_movies(scraped_movies)
     insert_query = """
                 INSERT INTO upcoming_movies (title, poster, premier, trailer)
                 VALUES (%s, %s, %s, %s)"""
-    for movie in movies:
+    for movie in scraped_movies:
         if not movie_exists(movie["title"]):
             data_to_insert = (
                 movie["title"],
@@ -31,14 +31,25 @@ def update_upcoming(movies):
 
     db.commit()
 
-def delete_released_movies(movies):
+def delete_released_movies(scraped_movies):
+
+    """ INPUT: scraped_movies from scrape_upcoming.py
+
+        If a title is already stored in upcoming_movies, 
+        but not found by scrape_upcoming then it doesn't belong in upcoming_movies.
+
+        Removes movies from database that are found in stored_titles but not found in scraped_titles.
+
+    """
     
-    upcoming_titles = [movie["title"] for movie in movies]
+    scraped_titles = [movie["title"] for movie in scraped_movies]
+
     cursor.execute("SELECT title FROM upcoming_movies")
     stored_titles = [row[0] for row in cursor.fetchall()]
-    movies_to_remove = [title for title in stored_titles if title not in upcoming_titles]
+
+    movies_to_remove = [title for title in stored_titles if title not in scraped_titles]
     for title in movies_to_remove:
-        delete_query = f"DELETE FROM upcoming_movies WHERE title = {title}"
+        delete_query = f"DELETE FROM upcoming_movies WHERE title = '{title}'"
         cursor.execute(delete_query)
         db.commit()
 
