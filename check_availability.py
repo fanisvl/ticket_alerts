@@ -25,11 +25,8 @@ def main():
     available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     available_titles = [title.accessible_name for title in available_title_elements]
 
-    alerts = get_alerts() # (alert_id, email, movie_id)
-    for alert in alerts:
-        alert_id = alert[0]
-        email = alert[1]
-        movie_id = alert[2]
+    alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_id)
+    for (alert_id, email, movie_id) in alerts:
         title = get_title_by_id(movie_id)
         if title in available_titles:
             send_email(email, f"Tickets available for {title.capitalize()}", "Tickets now available!")
