@@ -8,6 +8,11 @@ from database import get_alerts, delete_alert, get_title_by_id
 
 def main():
 
+    """
+    Check if any movies with alerts have tickets available.
+    If so, send an email notification and delete the alert.
+    """
+
     # Initialize browser
     op = webdriver.ChromeOptions()
     op.add_argument('headless') 
