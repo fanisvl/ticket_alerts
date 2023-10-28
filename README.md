@@ -24,6 +24,6 @@ I'm expanding this project to create a web application that allows users to sele
 2. Alerts table (alert_id, email, movie_id)
 
 ## 3. Terminal UI / Website
-1. User selects an upcoming movie FROM → UPCOMING_MOVIES table
-2. User enters email
+1. Terminal/Website displays upcoming movie FROM → UPCOMING_MOVIES table
+2. User selects a movie, enters email
 3. Store alert (email, selected_movie) TO → ALERTS table
