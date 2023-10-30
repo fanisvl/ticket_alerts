@@ -13,6 +13,9 @@ def main():
     If so, send an email notification and delete the alert.
     """
 
+    alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_id)
+    if (len(alerts) == 0): exit()
+
     # Initialize browser
     op = webdriver.ChromeOptions()
     op.add_argument('headless') 
@@ -25,7 +28,6 @@ def main():
     available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     available_titles = [title.accessible_name for title in available_title_elements]
 
-    alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_id)
     for (alert_id, email, movie_id) in alerts:
         title = get_title_by_id(movie_id)
         if title in available_titles:
