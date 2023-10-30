@@ -62,6 +62,11 @@ def get_stored_titles():
     stored_titles = [row[0] for row in cursor.fetchall()]
     return stored_titles
 
+def set_tickets_available_true(id):
+    query = f"UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE id = {id}"
+    cursor.execute(query)
+
+
 # Alerts
 def post_alert(email, id):
     insert_query =  "INSERT INTO alerts (email, movie_id) VALUES (%s, %s)"
