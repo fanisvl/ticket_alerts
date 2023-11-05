@@ -8,12 +8,11 @@ from database import get_upcoming_movies, set_tickets_available_true
 def main():
 
     """
-    Update availability of upcoming_movies that do not have alerts set up for them.
+    Checks ticket availability of all Upcoming Movies, including movies that do not have alerts set up for them. 
+    Seperate from check_alerts.py, in order to be ran on a longer interval to save resources.
 
     Check if any upcoming_movies have tickets available.
-    If so, update their status to tickets available.
-
-    Seperate from check_alerts.py, in order to be ran on a longer interval.
+    If so, update ticketsAvailable attribute to true.
     """
 
     # Initialize browser
