@@ -56,9 +56,8 @@ def movie_exists(poster_url):
     """Returns true if a movie with the same title or a variation (ENG, 3D, DOLBY ATMOS) exists
        using the poster_url
     """
-    # Use a parameterized query to prevent SQL injection
+
     query = "SELECT COUNT(*) FROM upcoming_movies WHERE poster = %s"
-    
     cursor.execute(query, (poster_url,))
     count = cursor.fetchone()[0]
     return count > 0
