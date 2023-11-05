@@ -20,7 +20,7 @@ def update_upcoming(scraped_movies):
                 INSERT INTO upcoming_movies (title, poster, premier, trailer, description, genre)
                 VALUES (%s, %s, %s, %s, %s, %s)"""
     for movie in scraped_movies:
-        if not movie_exists(movie["title"]):
+        if not movie_exists(movie["poster"]):
             data_to_insert = (
                 movie["title"],
                 movie["poster"],
@@ -52,9 +52,14 @@ def delete_released_movies(scraped_movies):
         cursor.execute(delete_query)
         db.commit()
 
-def movie_exists(title):
-    query = "SELECT COUNT(*) FROM upcoming_movies WHERE title = %s"
-    cursor.execute(query, (title,))
+def movie_exists(poster_url):
+    """Returns true if a movie with the same title or a variation (ENG, 3D, DOLBY ATMOS) exists
+       using the poster_url
+    """
+    # Use a parameterized query to prevent SQL injection
+    query = "SELECT COUNT(*) FROM upcoming_movies WHERE poster = %s"
+    
+    cursor.execute(query, (poster_url,))
     count = cursor.fetchone()[0]
     return count > 0
 
