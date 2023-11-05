@@ -69,6 +69,7 @@ def get_upcoming_movies():
 def set_tickets_available_true(id):
     query = f"UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE id = {id}"
     cursor.execute(query)
+    db.commit()
 
 
 # Alerts
