@@ -17,15 +17,17 @@ def update_upcoming(scraped_movies):
     # Movies that are no longer upcoming should be removed.
     delete_released_movies(scraped_movies)
     insert_query = """
-                INSERT INTO upcoming_movies (title, poster, premier, trailer)
-                VALUES (%s, %s, %s, %s)"""
+                INSERT INTO upcoming_movies (title, poster, premier, trailer, description, genre)
+                VALUES (%s, %s, %s, %s, %s, %s)"""
     for movie in scraped_movies:
         if not movie_exists(movie["title"]):
             data_to_insert = (
                 movie["title"],
                 movie["poster"],
                 movie["premier"],
-                movie.get("trailer", None)
+                movie.get("trailer", None),
+                movie["description"],
+                movie["genre"]
             )
             cursor.execute(insert_query, data_to_insert)
 
