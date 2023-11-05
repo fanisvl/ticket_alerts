@@ -61,6 +61,11 @@ def get_stored_titles():
     stored_titles = [row[0] for row in cursor.fetchall()]
     return stored_titles
 
+def get_upcoming_movies():
+    cursor.execute("SELECT * FROM upcoming_movies")
+    return cursor.fetchall()
+    
+
 def set_tickets_available_true(id):
     query = f"UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE id = {id}"
     cursor.execute(query)
