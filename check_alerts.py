@@ -11,6 +11,9 @@ def main():
     """
     Check if any movies with alerts have tickets available.
     If so, send an email notification and delete the alert.
+
+    Less resource intensive than update_availability.py
+    Runs on a small interval to send notifications quickly 
     """
 
     alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_id)
@@ -19,9 +22,7 @@ def main():
     # Initialize browser
     op = webdriver.ChromeOptions()
     op.add_argument('headless') 
-
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
-
     driver.get('https://www.villagecinemas.gr/WebTicketing/')
     
     # The h5.media-heading selector includes titles in both english & greek
