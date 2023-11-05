@@ -41,13 +41,12 @@ def delete_released_movies(scraped_movies):
         Removes movies from database that are found in stored_titles but not found in scraped_titles.
 
     """
-    
     scraped_titles = [movie["title"] for movie in scraped_movies]
     stored_titles = get_stored_titles()
 
     movies_to_remove = [title for title in stored_titles if title not in scraped_titles]
     for title in movies_to_remove:
-        delete_query = f"DELETE FROM upcoming_movies WHERE title = '{title}'"
+        delete_query = f'DELETE FROM upcoming_movies WHERE title = "{title}"'
         cursor.execute(delete_query)
         db.commit()
 
