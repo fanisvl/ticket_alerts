@@ -15,7 +15,7 @@ cursor = db.cursor(buffered=True)
 # Upcoming
 def update_upcoming(scraped_movies):
     # Movies that are no longer upcoming should be removed.
-    delete_released_movies(scraped_movies)
+    delete_old_upcoming_movies(scraped_movies)
     insert_query = """
                 INSERT INTO upcoming_movies (title, poster, premier, trailer, description, genre)
                 VALUES (%s, %s, %s, %s, %s, %s)"""
@@ -33,20 +33,18 @@ def update_upcoming(scraped_movies):
 
     db.commit()
 
-def delete_released_movies(scraped_movies):
+def delete_old_upcoming_movies(scraped_movies):
 
     """ INPUT: scraped_movies from scrape_upcoming.py
 
-        If a title is already stored in upcoming_movies, 
-        but not found by scrape_upcoming then it doesn't belong in upcoming_movies.
-
-        Removes movies from database that are found in stored_titles but not found in scraped_titles.
+        If a title is stored in upcoming_movies database, 
+        but not found by scrape_upcoming then it has been released and must be deleted.
 
     """
     scraped_titles = [movie["title"] for movie in scraped_movies]
-    stored_titles = get_stored_titles()
+    upcoming_titles = get_upcoming_titles()
 
-    movies_to_remove = [title for title in stored_titles if title not in scraped_titles]
+    movies_to_remove = [title for title in upcoming_titles if title not in scraped_titles]
     for title in movies_to_remove:
         delete_query = f'DELETE FROM upcoming_movies WHERE title = "{title}"'
         cursor.execute(delete_query)
@@ -54,7 +52,7 @@ def delete_released_movies(scraped_movies):
 
 def movie_exists(poster_url):
     """Returns true if a movie with the same title or a variation (ENG, 3D, DOLBY ATMOS) exists
-       using the poster_url
+       by checking for equal post_urls
     """
 
     query = "SELECT COUNT(*) FROM upcoming_movies WHERE poster = %s"
@@ -62,21 +60,17 @@ def movie_exists(poster_url):
     count = cursor.fetchone()[0]
     return count > 0
 
-def get_stored_titles():
-    cursor.execute("SELECT title FROM upcoming_movies")
-    stored_titles = [row[0] for row in cursor.fetchall()]
-    return stored_titles
+def get_upcoming_titles():
+    return [row[1] for row in get_upcoming_movies()]
 
 def get_upcoming_movies():
     cursor.execute("SELECT * FROM upcoming_movies")
     return cursor.fetchall()
-    
 
 def set_tickets_available_true(id):
     query = f"UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE id = {id}"
     cursor.execute(query)
     db.commit()
-
 
 # Alerts
 def post_alert(email, id):
@@ -119,3 +113,4 @@ def get_title_by_id(id):
         return title
     else:
         return None
+
