@@ -4,7 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from send_email import send_email
 import os
-from database import get_alerts, delete_alert, set_tickets_available_true
+from database import get_alerts, delete_alert, set_tickets_available_true, get_movie_data
 
 def main():
 
@@ -31,7 +31,8 @@ def main():
 
     for (alert_id, email, title) in alerts:
         if title in available_titles:
-            send_email(email, f"Tickets available for {title.capitalize()}", "Tickets now available!")
+            movie_data = get_movie_data(title)
+            send_email(email, movie_data)
             set_tickets_available_true(title)
             delete_alert(alert_id)
     driver.close()

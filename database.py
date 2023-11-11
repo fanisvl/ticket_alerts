@@ -10,7 +10,7 @@ db = mysql.connector.connect(
     database=os.getenv("DB_NAME")
 )
 
-cursor = db.cursor(buffered=True)
+cursor = db.cursor(buffered=True, dictionary=True)
 
 # Upcoming
 def update_upcoming(scraped_movies):
@@ -67,6 +67,10 @@ def get_upcoming_movies():
     cursor.execute("SELECT * FROM upcoming_movies")
     return cursor.fetchall()
 
+def get_movie_data(title):
+    cursor.execute(f"SELECT * FROM upcoming_movies WHERE title = '{title}'")
+    return cursor.fetchone()
+
 def set_tickets_available_true(title):
     query = f"UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE title = '{title}'"
     cursor.execute(query)
@@ -113,4 +117,3 @@ def get_title_by_id(id):
         return title
     else:
         return None
-
