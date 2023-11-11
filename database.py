@@ -67,15 +67,15 @@ def get_upcoming_movies():
     cursor.execute("SELECT * FROM upcoming_movies")
     return cursor.fetchall()
 
-def set_tickets_available_true(id):
-    query = f"UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE id = {id}"
+def set_tickets_available_true(title):
+    query = f"UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE title = '{title}'"
     cursor.execute(query)
     db.commit()
 
 # Alerts
-def post_alert(email, id):
-    insert_query =  "INSERT INTO alerts (email, movie_id) VALUES (%s, %s)"
-    cursor.execute(insert_query, (email, id))
+def post_alert(email, title):
+    insert_query =  "INSERT INTO alerts (email, movie_title) VALUES (%s, %s)"
+    cursor.execute(insert_query, (email, title))
     db.commit()
 
 def delete_alert(id):
