@@ -4,7 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from send_email import send_email
 import os
-from database import get_alerts, delete_alert, get_title_by_id, set_tickets_available_true
+from database import get_alerts, delete_alert, set_tickets_available_true
 
 def main():
 
@@ -16,7 +16,7 @@ def main():
     Runs on a small interval to send notifications quickly 
     """
 
-    alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_id)
+    alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_title)
     if (len(alerts) == 0): exit()
 
     # Initialize browser
@@ -29,11 +29,10 @@ def main():
     available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     available_titles = [title.accessible_name for title in available_title_elements]
 
-    for (alert_id, email, movie_id) in alerts:
-        title = get_title_by_id(movie_id)
+    for (alert_id, email, title) in alerts:
         if title in available_titles:
             send_email(email, f"Tickets available for {title.capitalize()}", "Tickets now available!")
-            set_tickets_available_true(movie_id)
+            set_tickets_available_true(title)
             delete_alert(alert_id)
     driver.close()
 
