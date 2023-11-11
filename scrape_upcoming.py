@@ -47,16 +47,35 @@ def scrape_upcoming():
         print()
         driver.get(link)
         current_movie = {}
-        try: 
+        try:
             current_movie["title"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name
+        except:
+            current_movie["title"] = None
+
+        try:
             current_movie["poster"] = driver.find_element(By.CSS_SELECTOR, "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src")
+        except:
+            current_movie["poster"] = None
+
+        try:
             current_movie["premier"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name
+        except:
+            current_movie["premier"] = None
+
+        try:
             current_movie["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
+        except:
+            current_movie["trailer"] = None
+
+        try:
             current_movie["description"] = driver.find_element(By.CSS_SELECTOR, ".summary > div:nth-child(2)").text.replace('\n', ' ')
+        except:
+            current_movie["description"] = None
+
+        try:
             current_movie["genre"] = driver.find_element(By.CSS_SELECTOR, ".info_txt > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(7) > td:nth-child(2)").accessible_name
         except:
-            warning_log = open("scrape_upcoming_warning_log.txt", "a")
-            warning_log.write(f"{current_movie['title']} - Could not collect all data for this movie")
+            current_movie["genre"] = None
         movie_data.append(current_movie)
     update_upcoming(movie_data)
 
