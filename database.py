@@ -57,11 +57,11 @@ def movie_exists(poster_url):
 
     query = "SELECT COUNT(*) FROM upcoming_movies WHERE poster = %s"
     cursor.execute(query, (poster_url,))
-    count = cursor.fetchone()[0]
+    count = cursor.fetchone()["count(*)"]
     return count > 0
 
 def get_upcoming_titles():
-    return [row[1] for row in get_upcoming_movies()]
+    return [movie["title"] for movie in get_upcoming_movies()]
 
 def get_upcoming_movies():
     cursor.execute("SELECT * FROM upcoming_movies")
@@ -103,7 +103,7 @@ def get_id_by_title(title):
     cursor.execute(query)
     result = cursor.fetchone()
     if result:
-        id = result[0]
+        id = result["id"]
         return id
     else:
         return None
@@ -113,7 +113,7 @@ def get_title_by_id(id):
     cursor.execute(query)
     result = cursor.fetchone()
     if result:
-        title = result[0]
+        title = result["title"]
         return title
     else:
         return None
