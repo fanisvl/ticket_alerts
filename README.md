@@ -1,4 +1,4 @@
-# Ticket Availability
+# Ticket Alerts
 When Oppenheimer (2023) was released it was quite hard to obtain good seats so I needed a way to receive email notifications the moment new tickets became available.
 I'm expanding this project to create a web application that allows users to select any upcoming movie on Village Cinemas, enter their email & be notified when tickets become available.
 
