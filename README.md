@@ -15,10 +15,9 @@ This project provides a solution to that problem by allowing users to select any
 
 ### 1b. check_availability.py:
 1. Scrape available_titles (tickets available) from https://www.villagecinemas.gr/WebTicketing/
-2. Check ticket availability of upcoming movies (from database) using available_titles
-3. If tickets are available set ticketsAvailable to true
-4. Check if any alerts have ticketsAvailable true
-5. If so, send an email notification and delete the alert.  
+2. If a title from upcoming_movies (database) is in available titles set ticketsAvailable to true.
+5. Check if any alerts have ticketsAvailable true
+6. If so, send an email notification and delete the alert.  
 
 ## 2. Database:
 1. Upcoming Movies table (id, title, poster, premiere, trailer)
