@@ -39,7 +39,6 @@ def main():
         if has_tickets_available(alert["movie_title"]):
             movie_data = get_movie_data(alert["movie_title"])
             send_email(alert["email"], movie_data)
-            set_tickets_available_true(alert["movie_title"])
             delete_alert(alert["alert_id"])
             
 def clear():
