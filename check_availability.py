@@ -28,13 +28,13 @@ def main():
 
     # update ticket availability of all upcoming movies
     # *_ is used to ignore the rest of the values inside of each tuple, we only need id, title
-    for id, title, *_ in get_upcoming_movies():
-        if title in available_titles:
-            set_tickets_available_true(title)
+    for movie in get_upcoming_movies():
+        if movie["title"] in available_titles:
+            set_tickets_available_true(movie["title"])
     driver.close()
 
     alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_title)
-    
+
     for alert in alerts:
         if has_tickets_available(alert["movie_title"]):
             movie_data = get_movie_data(alert["movie_title"])
