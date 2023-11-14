@@ -3,23 +3,22 @@ When Oppenheimer was released, obtaining good seats was quite challenging, so I 
 This project provides a solution to that problem by allowing users to select any upcoming movie from the Village Cinemas website, enter their email & be notified when tickets become available.
 
 # Components
-![graph](https://github.com/fanisvl/ticket_availability/assets/82032857/9c1b9564-b42b-4e2f-a0e0-06b2a81505c9)
+
 
 ## 1. Interval Scripts:
+![IMG_20231114_183820](https://github.com/fanisvl/ticket_alerts/assets/82032857/6702c4f1-5740-44a8-bcc5-c76d12e1f013)
+
 
 ### 1a. scrape_upcoming.py
 1. Scrape upcoming movie data from [villagecinemas.com/prosehos](http://villagecinemas.com/prosehos)
 2. Store to database → UPCOMING_MOVIES table
 
-### 1b. check_all.py
-Check ticket availability of all Upcoming Movies, including movies that do not have alerts set up for them.
-Separate from check_alerts.py, in order to be run on a longer interval to save resources.
-
-### 1c. check_alerts.py:
+### 1b. check_availability.py:
 1. Scrape available_titles (tickets available) from https://www.villagecinemas.gr/WebTicketing/
-3. Check if any available_titles have alerts → from ALERTS table
-4. If a match is found send a notification.
-5. Delete alert → from ALERTS table
+2. Check ticket availability of upcoming movies (from database) using available_titles
+3. If tickets are available set ticketsAvailable to true
+4. Check if any alerts have ticketsAvailable true
+5. If so, send an email notification and delete the alert.  
 
 ## 2. Database:
 1. Upcoming Movies table (id, title, poster, premiere, trailer)
