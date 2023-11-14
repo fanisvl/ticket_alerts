@@ -16,22 +16,22 @@ def main():
     If so, update ticketsAvailable attribute to true.
     """
 
-    # # Initialize browser
-    # op = webdriver.ChromeOptions()
-    # op.add_argument('headless') 
-    # driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
-    # driver.get('https://www.villagecinemas.gr/WebTicketing/')
+    # Initialize browser
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless') 
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
+    driver.get('https://www.villagecinemas.gr/WebTicketing/')
     
-    # # The h5.media-heading selector includes titles in both english & greek
-    # available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
-    # available_titles = [title.accessible_name for title in available_title_elements]
+    # The h5.media-heading selector includes titles in both english & greek
+    available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
+    available_titles = [title.accessible_name for title in available_title_elements]
 
-    # # update ticket availability of all upcoming movies
-    # # *_ is used to ignore the rest of the values inside of each tuple, we only need id, title
-    # for id, title, *_ in get_upcoming_movies():
-    #     if title in available_titles:
-    #         set_tickets_available_true(id)
-    # driver.close()
+    # update ticket availability of all upcoming movies
+    # *_ is used to ignore the rest of the values inside of each tuple, we only need id, title
+    for id, title, *_ in get_upcoming_movies():
+        if title in available_titles:
+            set_tickets_available_true(id)
+    driver.close()
 
     alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_title)
     print(alerts)
