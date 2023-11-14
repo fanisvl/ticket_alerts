@@ -30,7 +30,7 @@ def main():
     # *_ is used to ignore the rest of the values inside of each tuple, we only need id, title
     for id, title, *_ in get_upcoming_movies():
         if title in available_titles:
-            set_tickets_available_true(id)
+            set_tickets_available_true(title)
     driver.close()
 
     alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_title)
