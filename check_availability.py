@@ -34,7 +34,6 @@ def main():
     driver.close()
 
     alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_title)
-    print(alerts)
     
     for alert in alerts:
         if has_tickets_available(alert["movie_title"]):
