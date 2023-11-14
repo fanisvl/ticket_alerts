@@ -76,6 +76,10 @@ def set_tickets_available_true(title):
     cursor.execute(query)
     db.commit()
 
+def has_tickets_available(title):
+    cursor.execute(f"SELECT (ticketsAvailable) FROM upcoming_movies WHERE title = '{title}'")
+    return cursor.fetchone()["ticketsAvailable"]
+
 # Alerts
 def post_alert(email, title):
     insert_query =  "INSERT INTO alerts (email, movie_title) VALUES (%s, %s)"
@@ -97,8 +101,8 @@ def get_alerts():
         alerts.append(alert)
     return alerts
 
-#  Title <> ID
-def get_id_by_title(title):
+#  Movie Title <> Movie ID
+def get_movie_id_by_title(title):
     query = f"SELECT id FROM upcoming_movies WHERE title='{title}'"
     cursor.execute(query)
     result = cursor.fetchone()
@@ -108,7 +112,7 @@ def get_id_by_title(title):
     else:
         return None
     
-def get_title_by_id(id):
+def get_movie_title_by_id(id):
     query = f"SELECT title FROM upcoming_movies WHERE id='{id}'"
     cursor.execute(query)
     result = cursor.fetchone()
@@ -117,3 +121,4 @@ def get_title_by_id(id):
         return title
     else:
         return None
+
