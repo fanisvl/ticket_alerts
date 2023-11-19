@@ -5,10 +5,9 @@ This project provides a solution to that problem by allowing users to select any
 # Components
 
 
-## 1. Interval Scripts:
 ![IMG_20231114_183820](https://github.com/fanisvl/ticket_alerts/assets/82032857/6702c4f1-5740-44a8-bcc5-c76d12e1f013)
 
-
+## 1. Interval Scripts:
 ### 1a. scrape_upcoming.py
 1. Scrape upcoming movie data from [villagecinemas.com/prosehos](http://villagecinemas.com/prosehos)
 2. Store to database → UPCOMING_MOVIES table
