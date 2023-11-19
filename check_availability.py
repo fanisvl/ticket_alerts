@@ -9,11 +9,8 @@ from send_email import send_email
 def main():
 
     """
-    Checks ticket availability of all Upcoming Movies, including movies that do not have alerts set up for them. 
-    Seperate from check_alerts.py, in order to be ran on a longer interval to save resources.
-
-    Check if any upcoming_movies have tickets available.
-    If so, update ticketsAvailable attribute to true.
+    Checks ticket availability of all Upcoming Movies & updates ticketAvailability attributes on database. 
+    If an upcoming movie has tickets available and alerts set up, the alerts are sent and then deleted.
     """
 
     # Initialize browser
@@ -26,15 +23,14 @@ def main():
     available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     available_titles = [title.accessible_name for title in available_title_elements]
 
-    # update ticket availability of all upcoming movies
-    # *_ is used to ignore the rest of the values inside of each tuple, we only need id, title
+    # Update ticketAvailability of all upcoming movies
     for movie in get_upcoming_movies():
         if movie["title"] in available_titles:
             set_tickets_available_true(movie["title"])
     driver.close()
 
+    # Send alerts if necessary
     alerts = get_alerts() # returns a list of tuples: (alert_id, email, movie_title)
-
     for alert in alerts:
         if has_tickets_available(alert["movie_title"]):
             movie_data = get_movie_data(alert["movie_title"])
