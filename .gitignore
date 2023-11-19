@@ -4,3 +4,4 @@ __pycache__/
 upcoming_movies.json
 tracked_titles.json
 scrape_upcoming_warning_log.txt
+.idea/
