@@ -113,26 +113,3 @@ def get_alerts():
     for alert in cursor:
         alerts.append(alert)
     return alerts
-
-
-#  Movie Title <> Movie ID
-def get_movie_id_by_title(title):
-    query = "SELECT id FROM upcoming_movies WHERE title = %s"
-    cursor.execute(query, (title,))
-    result = cursor.fetchone()
-    if result:
-        id = result["id"]
-        return id
-    else:
-        return None
-
-
-def get_movie_title_by_id(id):
-    query = "SELECT title FROM upcoming_movies WHERE id= %s"
-    cursor.execute(query, (id,))
-    result = cursor.fetchone()
-    if result:
-        title = result["title"]
-        return title
-    else:
-        return None
