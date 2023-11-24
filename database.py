@@ -47,8 +47,8 @@ def delete_old_upcoming_movies(scraped_movies):
 
     movies_to_remove = [title for title in upcoming_titles if title not in scraped_titles]
     for title in movies_to_remove:
-        delete_query = f'DELETE FROM upcoming_movies WHERE title = "{title}"'
-        cursor.execute(delete_query)
+        delete_query = "DELETE FROM upcoming_movies WHERE title = %s"
+        cursor.execute(delete_query, (title,))
         db.commit()
 
 
@@ -73,18 +73,20 @@ def get_upcoming_movies():
 
 
 def get_movie_data(title):
-    cursor.execute(f"SELECT * FROM upcoming_movies WHERE title = '{title}'")
+    query = "SELECT * FROM upcoming_movies WHERE title = %s"
+    cursor.execute(query, (title,))
     return cursor.fetchone()
 
 
 def set_tickets_available_true(title):
-    query = f"UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE title = '{title}'"
-    cursor.execute(query)
+    query = "UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE title = %s"
+    cursor.execute(query, (title,))
     db.commit()
 
 
 def has_tickets_available(title):
-    cursor.execute(f"SELECT (ticketsAvailable) FROM upcoming_movies WHERE title = '{title}'")
+    query = "SELECT (ticketsAvailable) FROM upcoming_movies WHERE title = %s"
+    cursor.execute(query, (title,))
     return cursor.fetchone()["ticketsAvailable"]
 
 
@@ -97,8 +99,8 @@ def post_alert(email, title):
 
 
 def delete_alert(id):
-    query = f"DELETE FROM alerts WHERE alert_id = {id}"
-    cursor.execute(query)
+    query = "DELETE FROM alerts WHERE alert_id = %s"
+    cursor.execute(query, (id,))
     db.commit()
 
 
@@ -115,8 +117,8 @@ def get_alerts():
 
 #  Movie Title <> Movie ID
 def get_movie_id_by_title(title):
-    query = f"SELECT id FROM upcoming_movies WHERE title='{title}'"
-    cursor.execute(query)
+    query = "SELECT id FROM upcoming_movies WHERE title = %s"
+    cursor.execute(query, (title,))
     result = cursor.fetchone()
     if result:
         id = result["id"]
@@ -126,8 +128,8 @@ def get_movie_id_by_title(title):
 
 
 def get_movie_title_by_id(id):
-    query = f"SELECT title FROM upcoming_movies WHERE id='{id}'"
-    cursor.execute(query)
+    query = "SELECT title FROM upcoming_movies WHERE id= %s"
+    cursor.execute(query, (id,))
     result = cursor.fetchone()
     if result:
         title = result["title"]
