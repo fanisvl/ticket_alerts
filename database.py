@@ -12,6 +12,7 @@ db = mysql.connector.connect(
 
 cursor = db.cursor(buffered=True, dictionary=True)
 
+
 # Upcoming
 def update_upcoming(scraped_movies):
     # Movies that are no longer upcoming should be removed.
@@ -33,8 +34,8 @@ def update_upcoming(scraped_movies):
 
     db.commit()
 
-def delete_old_upcoming_movies(scraped_movies):
 
+def delete_old_upcoming_movies(scraped_movies):
     """ INPUT: scraped_movies from scrape_upcoming.py
 
         If a title is stored in upcoming_movies database, 
@@ -50,6 +51,7 @@ def delete_old_upcoming_movies(scraped_movies):
         cursor.execute(delete_query)
         db.commit()
 
+
 def movie_exists(poster_url):
     """Returns true if a movie with the same title or a variation (ENG, 3D, DOLBY ATMOS) exists
        by checking for equal post_urls
@@ -60,36 +62,45 @@ def movie_exists(poster_url):
     count = cursor.fetchone()["count(*)"]
     return count > 0
 
+
 def get_upcoming_titles():
     return [movie["title"] for movie in get_upcoming_movies()]
+
 
 def get_upcoming_movies():
     cursor.execute("SELECT * FROM upcoming_movies")
     return cursor.fetchall()
 
+
 def get_movie_data(title):
     cursor.execute(f"SELECT * FROM upcoming_movies WHERE title = '{title}'")
     return cursor.fetchone()
+
 
 def set_tickets_available_true(title):
     query = f"UPDATE upcoming_movies SET ticketsAvailable = 1 WHERE title = '{title}'"
     cursor.execute(query)
     db.commit()
 
+
 def has_tickets_available(title):
     cursor.execute(f"SELECT (ticketsAvailable) FROM upcoming_movies WHERE title = '{title}'")
     return cursor.fetchone()["ticketsAvailable"]
 
+
 # Alerts
 def post_alert(email, title):
-    insert_query =  "INSERT INTO alerts (email, movie_title) VALUES (%s, %s)"
+    insert_query = "INSERT INTO alerts (email, movie_title) VALUES (%s, %s)"
     cursor.execute(insert_query, (email, title))
     db.commit()
+
+
 
 def delete_alert(id):
     query = f"DELETE FROM alerts WHERE alert_id = {id}"
     cursor.execute(query)
     db.commit()
+
 
 def get_alerts():
     """Returns tuple of alerts table rows. Format: (alert_id, email, movie_id)"""
@@ -101,6 +112,7 @@ def get_alerts():
         alerts.append(alert)
     return alerts
 
+
 #  Movie Title <> Movie ID
 def get_movie_id_by_title(title):
     query = f"SELECT id FROM upcoming_movies WHERE title='{title}'"
@@ -111,7 +123,8 @@ def get_movie_id_by_title(title):
         return id
     else:
         return None
-    
+
+
 def get_movie_title_by_id(id):
     query = f"SELECT title FROM upcoming_movies WHERE id='{id}'"
     cursor.execute(query)
@@ -121,4 +134,3 @@ def get_movie_title_by_id(id):
         return title
     else:
         return None
-
