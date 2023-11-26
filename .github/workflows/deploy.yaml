@@ -22,7 +22,7 @@ jobs:
 
     - name: Connect to server and pull changes
       run: |
-        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ticket_alerts && git checkout main && git pull origin main"
+        ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ticket_alerts && git checkout main && git pull origin main"
 
     - name: Clean up
       run: |
