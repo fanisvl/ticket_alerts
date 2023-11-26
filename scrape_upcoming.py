@@ -25,15 +25,15 @@ def scrape_upcoming():
     # Assuming no more than 2 pages (40 upcoming movies)
     try:
         go_to_second_page = driver.find_element(By.CSS_SELECTOR, "#ContentPlaceHolderDefault_ContentPlaceHolder1_movies_comingsoon_Pager_lvPager_hnum_1")
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);") # Scroll to bottom
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")  # Scroll to bottom
         go_to_second_page.click()
 
         # Grab second page movie links
         movie_links.extend(find_movie_links())
     except:
-        pass # No second page
+        pass  # No second page
 
-    count = 1 # For terminal info
+    count = 1  # For terminal info
     movie_data = []
     for link in movie_links:
         
