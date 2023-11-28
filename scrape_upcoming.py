@@ -18,7 +18,6 @@ def scrape_upcoming():
     movie_links = find_movie_links()
 
     # Grab second page links
-    # Assuming that when there's no second page, there is no '02' page link
     # Assuming no more than 2 pages (40 upcoming movies)
     try:
         go_to_second_page = driver.find_element(By.CSS_SELECTOR,
@@ -29,7 +28,7 @@ def scrape_upcoming():
         # Grab second page movie links
         movie_links.extend(find_movie_links())
     except:
-        pass  # No second page
+        pass
 
     count = 1  # For terminal info
     movie_data = []
@@ -53,8 +52,7 @@ def scrape_upcoming():
 
         try:
             current_movie["poster"] = driver.find_element(By.CSS_SELECTOR,
-                                                          "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute(
-                "src")
+                                                          "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src")
         except:
             current_movie["poster"] = ""
 
@@ -82,6 +80,7 @@ def scrape_upcoming():
         except:
             current_movie["genre"] = ""
         movie_data.append(current_movie)
+
     update_upcoming(movie_data)
 
 
