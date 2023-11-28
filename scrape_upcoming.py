@@ -85,7 +85,7 @@ def scrape_upcoming():
 
 
 def find_movie_links():
-    """Returns list of movie links movie_links"""
+    """Returns list of movie links"""
     movie_links = []
     find_movies = driver.find_elements(By.CSS_SELECTOR, "div[class='box_title'] > h2 > a")
 
