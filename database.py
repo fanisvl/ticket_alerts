@@ -97,7 +97,6 @@ def post_alert(email, title):
     db.commit()
 
 
-
 def delete_alert(id):
     query = "DELETE FROM alerts WHERE alert_id = %s"
     cursor.execute(query, (id,))
