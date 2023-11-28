@@ -54,7 +54,7 @@ def delete_old_upcoming_movies(scraped_movies):
 
 def movie_exists(poster_url):
     """Returns true if a movie with the same title or a variation (ENG, 3D, DOLBY ATMOS) exists
-       by checking for equal post_urls
+       by checking for equal poster_urls
     """
 
     query = "SELECT COUNT(*) FROM upcoming_movies WHERE poster = %s"
