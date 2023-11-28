@@ -44,19 +44,14 @@ def scrape_upcoming():
         print()
         driver.get(link)
         current_movie = {
-            "title": driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name,
-            "poster": driver.find_element(By.CSS_SELECTOR,
-                                          "#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute(
-                "src"),
-            "premier": driver.find_element(By.CSS_SELECTOR,
-                                           "#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name,
-            "description": driver.find_element(By.CSS_SELECTOR, ".summary > div:nth-child(2)").text.replace('\n', ' '),
-            "genre": driver.find_element(By.CSS_SELECTOR,
-                                         ".info_txt > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(7) > td:nth-child(2)").accessible_name
+            "title": driver.find_element(By.CSS_SELECTOR,"#movie_container > div.title2 > h2").accessible_name,
+            "poster": driver.find_element(By.CSS_SELECTOR,"#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src"),
+            "premier": driver.find_element(By.CSS_SELECTOR,"#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name,
+            "description": driver.find_element(By.CSS_SELECTOR,".summary > div:nth-child(2)").text.replace('\n', ' '),
+            "genre": driver.find_element(By.CSS_SELECTOR,".info_txt > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(7) > td:nth-child(2)").accessible_name
         }
         try:
-            current_movie["trailer"] = driver.find_element(By.CSS_SELECTOR,
-                                                           "#movie_container > div.video > iframe").get_attribute("src")
+            current_movie["trailer"] = driver.find_element(By.CSS_SELECTOR,"#movie_container > div.video > iframe").get_attribute("src")
         except:
             current_movie["trailer"] = ""
         movie_data.append(current_movie)
