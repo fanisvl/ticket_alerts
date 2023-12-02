@@ -1,14 +1,16 @@
+# Scraping
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+# Database
 from database import get_upcoming_movies, set_tickets_available_true, has_tickets_available, \
     get_movie_data, get_alerts, delete_alert
+# Alerts
 from send_email import send_email
 
 
 def main():
-    """"update_availability and send_alerts are in the same file since they are executed consecutively"""
     update_availability()
     send_alerts()
 
