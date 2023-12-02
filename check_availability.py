@@ -14,7 +14,16 @@ def main():
 
 
 def update_availability():
-    """Scrapes the cinema website to update ticket availability in the database."""
+    """Update database ticketAvailability """
+
+    available_titles = scrape_available_titles()
+    for movie in get_upcoming_movies():
+        if movie["title"] in available_titles:
+            set_tickets_available_true(movie["title"])
+
+
+def scrape_available_titles():
+    """Scrapes the cinema website for titles with available tickets."""
 
     # Initialize browser
     op = webdriver.ChromeOptions()
@@ -26,11 +35,7 @@ def update_availability():
     available_title_elements = driver.find_elements(By.CSS_SELECTOR, "h5.media-heading")
     available_titles = [title.accessible_name for title in available_title_elements]
     driver.close()
-
-    # Update database ticketAvailability of all upcoming movies
-    for movie in get_upcoming_movies():
-        if movie["title"] in available_titles:
-            set_tickets_available_true(movie["title"])
+    return available_titles
 
 
 def send_alerts():
