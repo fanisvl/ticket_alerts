@@ -105,10 +105,5 @@ def delete_alert(id):
 
 def get_alerts():
     """Returns tuple of alerts table rows. Format: (alert_id, email, movie_id)"""
-
-    query = "SELECT * FROM alerts"
-    cursor.execute(query)
-    alerts = []
-    for alert in cursor:
-        alerts.append(alert)
-    return alerts
+    cursor.execute("SELECT * FROM alerts")
+    return cursor.fetchall()
