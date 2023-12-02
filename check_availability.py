@@ -39,13 +39,5 @@ def main():
             delete_alert(alert["alert_id"])
 
 
-def clear():
-    """Clear terminal screen"""
-    if os.name == 'posix':
-        os.system('clear')
-    else:
-        os.system('cls')
-
-
 if __name__ == "__main__":
     main()
