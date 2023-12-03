@@ -27,18 +27,17 @@ def scrape_upcoming():
     except:
         pass
 
-    count = 1  # For terminal info
+    count = 1  # Terminal info
     movie_data = []
     for link in movie_links:
 
         # Terminal info
         clear()
         print(f"Collecting data... {count}/{len(movie_links)}")
+        print(link + "\n")
         count += 1
 
         # Collect data
-        print(link)
-        print()
         driver.get(link)
         current_movie = {
             "title": driver.find_element(By.CSS_SELECTOR,"#movie_container > div.title2 > h2").accessible_name,
