@@ -12,20 +12,8 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 
 def scrape_upcoming():
-    driver.get('https://www.villagecinemas.gr/el/tainies/prosehos/?pg=0')
 
-    # Grab first page movie links
-    movie_links = find_movie_links()
-
-    # Grab second page links
-    # Assuming no more than 2 pages (40 upcoming movies)
-    try:
-        go_to_second_page = driver.find_element(By.CSS_SELECTOR,"#ContentPlaceHolderDefault_ContentPlaceHolder1_movies_comingsoon_Pager_lvPager_hnum_1")
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")  # Scroll to bottom
-        go_to_second_page.click()
-        movie_links.extend(find_movie_links())
-    except:
-        pass
+    movie_links = find_movie_links('https://www.villagecinemas.gr/el/tainies/prosehos/?pg=0')
 
     count = 1  # Terminal info
     movie_data = []
@@ -55,8 +43,9 @@ def scrape_upcoming():
     update_upcoming(movie_data)
 
 
-def find_movie_links():
+def find_movie_links(url):
     """Returns list of movie links"""
+    driver.get(url)
     movie_links = []
     movie_elements = driver.find_elements(By.CSS_SELECTOR, "div[class='box_title'] > h2 > a")
 
