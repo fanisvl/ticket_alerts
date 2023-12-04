@@ -56,9 +56,14 @@ def find_movie_links(url):
 
 def collect_movie_data(link):
     """
-    Input: Movie page link
-    Output: A dictionary with title, poster, premier, description, genre & trailer_url of the movie
-    """
+    Collect movie data from the given movie page link.
+
+    Args:
+    link (str): Movie page link.
+
+    Returns:
+    Dictionary with title, poster, premier, description, genre, and trailer (if found) of the movie."""
+
     driver.get(link)
     current_movie = {
         "title": driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name,
