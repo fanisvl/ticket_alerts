@@ -19,7 +19,7 @@ def scrape_upcoming():
     upcoming_movie_links = get_upcoming_movie_links('https://www.villagecinemas.gr/el/tainies/prosehos/?pg=0')
 
     count = 1  # Terminal info
-    movie_data = []
+    upcoming_movies = []
     for link in upcoming_movie_links:
 
         # Terminal info
@@ -29,9 +29,9 @@ def scrape_upcoming():
         count += 1
 
         # Get movie data
-        movie_data.append(collect_movie_data(link))
+        upcoming_movies.append(collect_movie_data(link))
 
-    update_upcoming(movie_data)
+    update_upcoming(upcoming_movies)
 
 
 def get_upcoming_movie_links(url):
