@@ -12,7 +12,6 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 
 def scrape_upcoming():
-
     movie_links = find_movie_links('https://www.villagecinemas.gr/el/tainies/prosehos/?pg=0')
 
     count = 1  # Terminal info
@@ -25,20 +24,8 @@ def scrape_upcoming():
         print(link + "\n")
         count += 1
 
-        # Collect data
-        driver.get(link)
-        current_movie = {
-            "title": driver.find_element(By.CSS_SELECTOR,"#movie_container > div.title2 > h2").accessible_name,
-            "poster": driver.find_element(By.CSS_SELECTOR,"#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src"),
-            "premier": driver.find_element(By.CSS_SELECTOR,"#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name,
-            "description": driver.find_element(By.CSS_SELECTOR,".summary > div:nth-child(2)").text.replace('\n', ' '),
-            "genre": driver.find_element(By.CSS_SELECTOR,".info_txt > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(7) > td:nth-child(2)").accessible_name
-        }
-        try:
-            current_movie["trailer"] = driver.find_element(By.CSS_SELECTOR, "#movie_container > div.video > iframe").get_attribute("src")
-        except:
-            current_movie["trailer"] = ""
-        movie_data.append(current_movie)
+        # Get movie data
+        movie_data.append(collect_movie_data(link))
 
     update_upcoming(movie_data)
 
@@ -48,12 +35,28 @@ def find_movie_links(url):
     driver.get(url)
     movie_links = []
     movie_elements = driver.find_elements(By.CSS_SELECTOR, "div[class='box_title'] > h2 > a")
-
     for movie in movie_elements:
         link = movie.get_attribute("href")
         movie_links.append(link)
-
     return movie_links
+
+
+def collect_movie_data(link):
+    # Collect data
+    driver.get(link)
+    current_movie = {
+        "title": driver.find_element(By.CSS_SELECTOR, "#movie_container > div.title2 > h2").accessible_name,
+        "poster": driver.find_element(By.CSS_SELECTOR,"#ContentPlaceHolderDefault_ContentPlaceHolder1_movie_3_MainImage").get_attribute("src"),
+        "premier": driver.find_element(By.CSS_SELECTOR,"#movie_container > div.details > div.dtls.FloatLeft > div.info > div.info_txt > table > tbody > tr:nth-child(5) > td:nth-child(2)").accessible_name,
+        "description": driver.find_element(By.CSS_SELECTOR, ".summary > div:nth-child(2)").text.replace('\n', ' '),
+        "genre": driver.find_element(By.CSS_SELECTOR,".info_txt > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(7) > td:nth-child(2)").accessible_name
+    }
+    try:
+        current_movie["trailer"] = driver.find_element(By.CSS_SELECTOR,"#movie_container > div.video > iframe").get_attribute("src")
+    except:
+        current_movie["trailer"] = ""
+
+    return current_movie
 
 
 def clear():
