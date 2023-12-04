@@ -13,8 +13,7 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 def scrape_upcoming():
     """
-    Scrape upcoming movie data from Village Cinema's upcoming movies page.
-    Returns: List of dictionaries containing movie data.
+    Scrape upcoming movies from Village Cinema's upcoming movies page and update database.
     """
 
     movie_links = find_movie_links('https://www.villagecinemas.gr/el/tainies/prosehos/?pg=0')
