@@ -16,15 +16,15 @@ def scrape_upcoming():
     Scrape upcoming movies from Village Cinema's upcoming movies page and update database.
     """
 
-    movie_links = find_movie_links('https://www.villagecinemas.gr/el/tainies/prosehos/?pg=0')
+    upcoming_movie_links = get_upcoming_movie_links('https://www.villagecinemas.gr/el/tainies/prosehos/?pg=0')
 
     count = 1  # Terminal info
     movie_data = []
-    for link in movie_links:
+    for link in upcoming_movie_links:
 
         # Terminal info
         clear()
-        print(f"Collecting data... {count}/{len(movie_links)}")
+        print(f"Collecting data... {count}/{len(upcoming_movie_links)}")
         print(link + "\n")
         count += 1
 
@@ -34,9 +34,9 @@ def scrape_upcoming():
     update_upcoming(movie_data)
 
 
-def find_movie_links(url):
+def get_upcoming_movie_links(url):
     """
-    Find and return a list of movie page links from the provided URL.
+    Return a list of movie page links from the provided URL.
 
     Args:
     url (str): The URL of the page containing movie links.
