@@ -2,7 +2,7 @@
 When Oppenheimer was released, finding good seats was quite challenging, so I needed a way to receive email notifications when new tickets became available.
 This project provides a solution by allowing users to select any upcoming movie from the Village Cinemas website, enter their email & be notified when tickets become available.
 
-You can try it out here: https://ticket-alerts.azurewebsites.net/
+You can try it out here: https://ticketalerts.azurewebsites.net
 
 # Components
 ![graph](https://github.com/fanisvl/ticket_alerts/assets/82032857/84d29eb0-e016-4903-a343-56e495df530e)
