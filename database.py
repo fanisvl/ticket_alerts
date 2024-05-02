@@ -57,9 +57,9 @@ def movie_exists(poster_url):
        by checking for equal poster_urls
     """
 
-    query = "SELECT COUNT(*) FROM upcoming_movies WHERE poster = %s"
+    query = "SELECT COUNT(*) as count FROM upcoming_movies WHERE poster = %s"
     cursor.execute(query, (poster_url,))
-    count = cursor.fetchone()["count(*)"]
+    count = cursor.fetchone()["count"]
     return count > 0
 
 
